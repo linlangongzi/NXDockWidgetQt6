@@ -2,6 +2,7 @@
 #include "NXMainWindow.h"
 #include <QStylePainter>
 #include <QDebug>
+#include <QStyleOptionButton>
 
 NXDockWidgetTabButton::NXDockWidgetTabButton(const QString& text, Qt::DockWidgetArea area) 
 	: QPushButton(text, nullptr)
@@ -13,7 +14,7 @@ NXDockWidgetTabButton::NXDockWidgetTabButton(const QString& text, Qt::DockWidget
 
 	m_orientation = areaToOrientation(area);
 
-	int fw = fontMetrics().width(text)+12;
+    int fw = fontMetrics().horizontalAdvance(text)+12;
 
 	fw = (fw < 15) ? 15 : fw;
 	fw = (fw > 120) ? 121 : fw;
@@ -36,7 +37,7 @@ void NXDockWidgetTabButton::setText_(const QString& text)
 	int aw = (m_orientation == Qt::Horizontal) ? width() - 4 : height() - 4;
 
 	QFontMetrics fm = fontMetrics();
-	if(aw < fm.width(text))
+    if(aw < fm.horizontalAdvance(text))
 	{
 		QString str;
 
@@ -45,7 +46,7 @@ void NXDockWidgetTabButton::setText_(const QString& text)
 		{
 			str += text.at(i);
 
-			if(fm.width(str + ".......") > aw)
+            if(fm.horizontalAdvance(str + ".......") > aw)
 				break;
 		}
 
